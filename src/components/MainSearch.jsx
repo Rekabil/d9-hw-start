@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Job from "./Job";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const MainSearch = () => {
   const [query, setQuery] = useState("");
@@ -10,6 +11,7 @@ const MainSearch = () => {
   const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search=";
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setQuery(e.target.value);
@@ -41,21 +43,22 @@ const MainSearch = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Control type="search" value={query} onChange={handleChange} placeholder="type and press Enter" />
           </Form>
+          <Button onClick={() => navigate("/favorite")}>Favorites</Button>
         </Col>
 
         <Col xs={10} className="mx-auto mb-5">
           {jobs.map((jobData) => (
-            <>
+            <div key={jobData._id}>
               <Job key={jobData._id} data={jobData} />
               <Button
                 variant="outline-dark"
-                onclick={() => {
-                  dispatch({ type: "ADD_FAVORITE", payload: jobData.company_name });
+                onClick={() => {
+                  dispatch({ type: "ADD_FAVORITE", payload: jobData });
                 }}
               >
                 Add Favorite
               </Button>
-            </>
+            </div>
           ))}
         </Col>
       </Row>

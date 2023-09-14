@@ -2,8 +2,9 @@ import { Button, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 const Favorite = () => {
-  const favorite = useSelector((state) => state.favorite.content);
+  const favorite = useSelector((state) => state.favorite.companies);
   const dispatch = useDispatch();
+  console.log(favorite);
 
   return (
     <Row>
@@ -19,7 +20,7 @@ const Favorite = () => {
               >
                 Remove Favorite
               </Button>
-              {fav}
+              {fav.company_name}
             </ListGroup.Item>
           ))
         ) : (
