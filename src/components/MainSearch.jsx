@@ -1,36 +1,24 @@
 import { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Job from "./Job";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { addFavoriteAction, getJobsAction } from "../redux/action";
 
 const MainSearch = () => {
   const [query, setQuery] = useState("");
-  const [jobs, setJobs] = useState([]);
-
-  const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search=";
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const jobs = useSelector((state) => state.jobs.content);
   const handleChange = (e) => {
     setQuery(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(baseEndpoint + query + "&limit=20");
-      if (response.ok) {
-        const { data } = await response.json();
-        setJobs(data);
-      } else {
-        alert("Error fetching results");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(getJobsAction(query));
   };
 
   return (
@@ -53,7 +41,7 @@ const MainSearch = () => {
               <Button
                 variant="outline-dark"
                 onClick={() => {
-                  dispatch({ type: "ADD_FAVORITE", payload: jobData });
+                  dispatch(addFavoriteAction(jobData));
                 }}
               >
                 Add Favorite

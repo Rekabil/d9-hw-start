@@ -1,21 +1,22 @@
 import { Button, ListGroup, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { removeFavoritAction } from "../redux/action";
 
 const Favorite = () => {
-  const favorite = useSelector((state) => state.favorite.companies);
+  const favorites = useSelector((state) => state.favorite.companies);
   const dispatch = useDispatch();
-  console.log(favorite);
+  console.log(favorites);
 
   return (
     <Row>
       <ListGroup variant="flush">
-        {favorite.length > 0 ? (
-          favorite.map((fav, i) => (
+        {favorites.length > 0 ? (
+          favorites.map((fav, i) => (
             <ListGroup.Item key={i}>
               <Button
                 variant="danger"
                 onClick={() => {
-                  dispatch({ type: "REMOVE_FAVORITE", payload: i });
+                  dispatch(removeFavoritAction(i));
                 }}
               >
                 Remove Favorite
@@ -24,7 +25,7 @@ const Favorite = () => {
             </ListGroup.Item>
           ))
         ) : (
-          <ListGroup.Item>Your cart is empty</ListGroup.Item>
+          <ListGroup.Item>You Dont Have Favorite</ListGroup.Item>
         )}
       </ListGroup>
     </Row>
