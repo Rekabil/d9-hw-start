@@ -1,9 +1,7 @@
 import { ADD_FAVORITE, REMOVE_FAVORITE } from "../action";
 
 const initialState = {
-  favorite: {
-    companies: [],
-  },
+  companies: [],
 };
 
 const favoriteReducer = (state = initialState, action) => {
@@ -11,18 +9,13 @@ const favoriteReducer = (state = initialState, action) => {
     case ADD_FAVORITE:
       return {
         ...state,
-        favorite: {
-          ...state.favorite,
-          companies: [...state.favorite.companies, action.payload],
-        },
+        companies: [...state.companies, action.payload],
       };
     case REMOVE_FAVORITE:
       return {
         ...state,
-        favorite: {
-          ...state.favorite,
-          companies: state.favorite.companies.filter((_, i) => i !== action.payload),
-        },
+
+        companies: state.companies.filter((_, i) => i !== action.payload),
       };
     default:
       return state;

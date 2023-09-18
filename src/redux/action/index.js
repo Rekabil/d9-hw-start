@@ -8,9 +8,7 @@ export const removeFavoritAction = (i) => ({ type: REMOVE_FAVORITE, payload: i }
 const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?search=";
 
 export const getJobsAction = (query) => {
-  return async (dispatch, getState) => {
-    console.log("GET STATE", getState());
-
+  return async (dispatch) => {
     try {
       const response = await fetch(baseEndpoint + query + "&limit=20");
       if (response.ok) {
